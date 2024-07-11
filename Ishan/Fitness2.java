@@ -8,6 +8,16 @@ import HAL.Tools.FileIO;
 import HAL.Rand;
 import HAL.Util;
 
+/** DIRECTLY MODIFIED FROM MATHONCO/HAL/DIVISIONDEATHMUTATION.JAVA
+ * 
+ * ADAPTED TO ALLOW FOR GREATER VARIATION IN DIV-PROB AND DIE-PROB
+ * 
+ * 
+ * CODE WRITTEN BY: ISHAN BHATT
+ * 
+ * LAST UPDATED: 7/11/2024 
+*/
+
 class Cell extends AgentSQ2Dunstackable<Fitness2> {
     double DIV_PROB = 0.0;
     double DIE_PROB = 0.0;
