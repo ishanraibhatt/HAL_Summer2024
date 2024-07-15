@@ -1,7 +1,5 @@
 package Ishan;
 
-import java.io.*;
-
 import HAL.GridsAndAgents.AgentGrid2D;
 import HAL.GridsAndAgents.AgentSQ2Dunstackable;
 import HAL.Gui.GridWindow;
@@ -9,10 +7,6 @@ import HAL.Gui.UIGrid;
 import HAL.Tools.FileIO;
 import HAL.Rand;
 import HAL.Util;
-
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /** DIRECTLY MODIFIED FROM MATHONCO/HAL/DIVISIONDEATHMUTATION.JAVA
  * 
