@@ -8,6 +8,9 @@ import HAL.Tools.FileIO;
 import HAL.Rand;
 import HAL.Util;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /** DIRECTLY MODIFIED FROM MATHONCO/HAL/DIVISIONDEATHMUTATION.JAVA
  * 
  * ADAPTED TO ALLOW FOR GREATER VARIATION IN DIV-PROB AND DIE-PROB
@@ -28,12 +31,12 @@ class Cell extends AgentSQ2Dunstackable<Fitness2> {
         double Mutates = G.rn.Double();
         if(Mutates < G.MUT_PROB && Mutates > G.MUT_PROB * 0.95) {
             //if it mutates, and the mutation actually does something, decide which mutation it will recieve
-            if(Mutates > G.MUT_PROB * 0.5) {
+            if(G.rn.Double() > 0.5) {
                 this.DIV_PROB = this.DIV_PROB + 0.01;
-                this.DIE_PROB = this.DIE_PROB +0.01;
+                this.DIE_PROB = this.DIE_PROB +0.001;
             }else{
                 this.DIV_PROB = this.DIV_PROB -0.01;
-                this.DIE_PROB = this.DIE_PROB - 0.01;
+                this.DIE_PROB = this.DIE_PROB - 0.001;
             }
         Draw(this.DIV_PROB);
         }
@@ -41,9 +44,9 @@ class Cell extends AgentSQ2Dunstackable<Fitness2> {
 
     void Draw(double DIV_PROB){
         if(this.DIV_PROB > 0.2){
-            G.vis.SetPix(Isq(),Util.YELLOW);
-        }else if(this.DIV_PROB < 0.2){
             G.vis.SetPix(Isq(),Util.RED);
+        }else if(this.DIV_PROB < 0.2){
+            G.vis.SetPix(Isq(),Util.BLUE);
         } else {
             G.vis.SetPix(Isq(), Util.GREEN);
         }
@@ -69,16 +72,17 @@ class Cell extends AgentSQ2Dunstackable<Fitness2> {
 
 public class Fitness2 extends AgentGrid2D<Cell> {
     
+    int nNormal = 0;
+    int nFast = 0;
+    int nSlow = 0;
+    int nCells = 0;
+    int[] CellCounts = new int[]{nCells,nNormal,nFast,nSlow};
     double MUT_PROB = 0.06;
     final static int BLACK= Util.RGB(0,0,0);
     int[]hood=Util.GenHood2D(new int[]{1,0,-1,0,0,1,0,-1}); //equivalent to int[]hood=Util.VonNeumannHood(false);
     Rand rn=new Rand(1);
     UIGrid vis;
     FileIO outputFile=null;
-    public Fitness2(int x, int y, UIGrid vis) {
-        super(x, y, Cell.class);
-        this.vis=vis;
-    }
     public Fitness2(int x, int y, UIGrid vis, String outputFileName) {
         super(x, y, Cell.class);
         this.vis=vis;
@@ -97,7 +101,12 @@ public class Fitness2 extends AgentGrid2D<Cell> {
 
 
     public void StepCells(int tick){
+        nCells = 0;
+        nFast = 0;
+        nSlow = 0;
+        nNormal = 0;
         for (Cell c : this) {//iterate over all cells in the grid
+            nCells++;
             if(rn.Double()< c.DIE_PROB){
                 vis.SetPix(c.Isq(),BLACK);
                 c.Dispose();//removes cell from sptial grid and iteration
@@ -105,7 +114,16 @@ public class Fitness2 extends AgentGrid2D<Cell> {
             else if(rn.Double()< c.DIV_PROB){
                 c.Divide();
             }
+            if(c.DIV_PROB == 0.2){
+                nNormal++;
+            }else if (c.DIV_PROB > 0.2){
+                nFast++;
+            }else if (c.DIV_PROB < 0.2){
+                nSlow++;
+            }
         }
+        int[] CellCounts = {nCells, nNormal, nFast, nSlow}; 
+        outputFile.Write(Util.ArrToString(CellCounts,",")+"\n");//write populations every timestep
         ShuffleAgents(rn);//shuffles order of for loop iteration
 //        IncTick();//increments timestep, including newly generated cells in the next round of iteration
     }
@@ -115,7 +133,7 @@ public class Fitness2 extends AgentGrid2D<Cell> {
         int x=500,y=500,scaleFactor=2;
         //int x=1000,y=1000,scaleFactor=1;
         GridWindow vis=new GridWindow(x,y,scaleFactor);//used for visualization
-        Fitness2 grid=new Fitness2(x,y,vis);
+        Fitness2 grid=new Fitness2(x,y,vis, "FitnessResults");
         grid.InitTumor(5);
         for (int tick = 0; tick < 10000; tick++) {
             vis.TickPause(0);//set to nonzero value to cap tick rate.
