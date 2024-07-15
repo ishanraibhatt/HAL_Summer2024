@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Fitness",
+            "request": "launch",
+            "mainClass": "Ishan.Fitness",
+            "projectName": "HAL_Summer2024_d881c9d1"
+        },
+        {
+            "type": "java",
             "name": "Fitness2",
             "request": "launch",
             "mainClass": "Ishan.Fitness2",
