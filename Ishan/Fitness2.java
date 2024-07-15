@@ -1,5 +1,7 @@
 package Ishan;
 
+import java.io.*;
+
 import HAL.GridsAndAgents.AgentGrid2D;
 import HAL.GridsAndAgents.AgentSQ2Dunstackable;
 import HAL.Gui.GridWindow;
@@ -8,6 +10,7 @@ import HAL.Tools.FileIO;
 import HAL.Rand;
 import HAL.Util;
 
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -83,6 +86,15 @@ public class Fitness2 extends AgentGrid2D<Cell> {
     Rand rn=new Rand(1);
     UIGrid vis;
     FileIO outputFile=null;
+    public void Writing(int[] CellCounts){
+        try {
+            FileOutputStream  fout = new FileOutputStream("Fitness2Results");
+            
+        }
+        catch (Exception e) {
+            e.getStackTrace();
+        }
+    }
     public Fitness2(int x, int y, UIGrid vis, String outputFileName) {
         super(x, y, Cell.class);
         this.vis=vis;
@@ -123,7 +135,8 @@ public class Fitness2 extends AgentGrid2D<Cell> {
             }
         }
         int[] CellCounts = {nCells, nNormal, nFast, nSlow}; 
-        outputFile.Write(Util.ArrToString(CellCounts,",")+"\n");//write populations every timestep
+        outputFile.Write(Util.ArrToString(CellCounts,",")+"\n");
+        Writing(CellCounts);
         ShuffleAgents(rn);//shuffles order of for loop iteration
 //        IncTick();//increments timestep, including newly generated cells in the next round of iteration
     }
@@ -135,7 +148,7 @@ public class Fitness2 extends AgentGrid2D<Cell> {
         GridWindow vis=new GridWindow(x,y,scaleFactor);//used for visualization
         Fitness2 grid=new Fitness2(x,y,vis, "FitnessResults");
         grid.InitTumor(5);
-        for (int tick = 0; tick < 10000; tick++) {
+        for (int tick = 0; tick < 5000; tick++) {
             vis.TickPause(0);//set to nonzero value to cap tick rate.
             grid.StepCells(tick);
         }
