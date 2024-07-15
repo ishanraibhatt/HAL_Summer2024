@@ -85,16 +85,7 @@ public class Fitness2 extends AgentGrid2D<Cell> {
     int[]hood=Util.GenHood2D(new int[]{1,0,-1,0,0,1,0,-1}); //equivalent to int[]hood=Util.VonNeumannHood(false);
     Rand rn=new Rand(1);
     UIGrid vis;
-    FileIO outputFile=null;
-    public void Writing(int[] CellCounts){
-        try {
-            FileOutputStream  fout = new FileOutputStream("Fitness2Results");
-            
-        }
-        catch (Exception e) {
-            e.getStackTrace();
-        }
-    }
+    static FileIO outputFile=null;
     public Fitness2(int x, int y, UIGrid vis, String outputFileName) {
         super(x, y, Cell.class);
         this.vis=vis;
@@ -136,7 +127,6 @@ public class Fitness2 extends AgentGrid2D<Cell> {
         }
         int[] CellCounts = {nCells, nNormal, nFast, nSlow}; 
         outputFile.Write(Util.ArrToString(CellCounts,",")+"\n");
-        Writing(CellCounts);
         ShuffleAgents(rn);//shuffles order of for loop iteration
 //        IncTick();//increments timestep, including newly generated cells in the next round of iteration
     }
@@ -152,6 +142,7 @@ public class Fitness2 extends AgentGrid2D<Cell> {
             vis.TickPause(0);//set to nonzero value to cap tick rate.
             grid.StepCells(tick);
         }
+        outputFile.Close();
         return;
     }
 }
