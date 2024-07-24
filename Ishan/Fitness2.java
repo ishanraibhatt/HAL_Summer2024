@@ -26,14 +26,15 @@ class Cell extends AgentSQ2Dunstackable<Fitness2> {
      
     void Mutate(){
         double Mutates = G.rn.Double();
-        if(Mutates < G.MUT_PROB && Mutates > G.MUT_PROB * 0.95) {
+        double useful = G.rn.Double();
+        if(Mutates < G.MUT_PROB && useful > 0.95) {
             //if it mutates, and the mutation actually does something, decide which mutation it will recieve
             if(G.rn.Double() > 0.5) {
                 this.DIV_PROB = this.DIV_PROB + 0.01;
-                this.DIE_PROB = this.DIE_PROB +0.001;
+                this.DIE_PROB = this.DIE_PROB +0.003;
             }else{
                 this.DIV_PROB = this.DIV_PROB -0.01;
-                this.DIE_PROB = this.DIE_PROB - 0.001;
+                this.DIE_PROB = this.DIE_PROB - 0.003;
             }
         Draw(this.DIV_PROB);
         }
@@ -52,6 +53,7 @@ class Cell extends AgentSQ2Dunstackable<Fitness2> {
 
 
     void Divide(){
+        
         int nOpts=MapEmptyHood(G.hood);//finds von neumann neighborhood indices around cell.
         if(nOpts>0 && G.rn.Double() < DIV_PROB){
             int iDaughter= G.hood[G.rn.Int(nOpts)];
@@ -77,7 +79,7 @@ public class Fitness2 extends AgentGrid2D<Cell> {
     double MUT_PROB = 0.06;
     final static int BLACK= Util.RGB(0,0,0);
     int[]hood=Util.GenHood2D(new int[]{1,0,-1,0,0,1,0,-1}); //equivalent to int[]hood=Util.VonNeumannHood(false);
-    Rand rn=new Rand(1);
+    Rand rn=new Rand();
     UIGrid vis;
     static FileIO outputFile=null;
     public Fitness2(int x, int y, UIGrid vis, String outputFileName) {
@@ -122,6 +124,7 @@ public class Fitness2 extends AgentGrid2D<Cell> {
         int[] CellCounts = {nCells, nNormal, nFast, nSlow}; 
         outputFile.Write(Util.ArrToString(CellCounts,",")+"\n");
         ShuffleAgents(rn);//shuffles order of for loop iteration
+        CleanAgents();
 //        IncTick();//increments timestep, including newly generated cells in the next round of iteration
     }
 
@@ -130,7 +133,8 @@ public class Fitness2 extends AgentGrid2D<Cell> {
         int x=500,y=500,scaleFactor=2;
         //int x=1000,y=1000,scaleFactor=1;
         GridWindow vis=new GridWindow(x,y,scaleFactor);//used for visualization
-        Fitness2 grid=new Fitness2(x,y,vis, "FitnessResults");
+        Fitness2 grid=new Fitness2(x,y,vis, "DTrial10");
+        outputFile.Write("Total Cells, Normal Cells, Fast Cells, Slow Cells" + "\n");
         grid.InitTumor(5);
         for (int tick = 0; tick < 5000; tick++) {
             vis.TickPause(0);//set to nonzero value to cap tick rate.

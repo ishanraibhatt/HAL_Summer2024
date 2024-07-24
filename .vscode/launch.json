@@ -6,6 +6,97 @@
     "configurations": [
         {
             "type": "java",
+            "name": "GOLGrid",
+            "request": "launch",
+            "mainClass": "Examples.GameOfLife.GOLGrid",
+            "projectName": "HAL_Summer2024_d881c9d1"
+        },
+        {
+            "type": "java",
+            "name": "GOLSweepEx",
+            "request": "launch",
+            "mainClass": "Examples.GameOfLife.GOLSweepEx",
+            "projectName": "HAL_Summer2024_d881c9d1"
+        },
+        {
+            "type": "java",
+            "name": "ColorBarGenerator",
+            "request": "launch",
+            "mainClass": "Examples.ColorBarGenerator.ColorBarGenerator",
+            "projectName": "HAL_Summer2024_d881c9d1"
+        },
+        {
+            "type": "java",
+            "name": "PersianCarpets",
+            "request": "launch",
+            "mainClass": "Examples.PersianModel.PersianCarpets",
+            "projectName": "HAL_Summer2024_d881c9d1"
+        },
+        {
+            "type": "java",
+            "name": "PhylogenyModel",
+            "request": "launch",
+            "mainClass": "Examples.PhylogenyTracker.PhylogenyModel",
+            "projectName": "HAL_Summer2024_d881c9d1"
+        },
+        {
+            "type": "java",
+            "name": "PopTumor",
+            "request": "launch",
+            "mainClass": "Examples.PopulationTumor.PopTumor",
+            "projectName": "HAL_Summer2024_d881c9d1"
+        },
+        {
+            "type": "java",
+            "name": "ExampleModelInteractive",
+            "request": "launch",
+            "mainClass": "Examples.ClinicianSim.ExampleModelInteractive",
+            "projectName": "HAL_Summer2024_d881c9d1"
+        },
+        {
+            "type": "java",
+            "name": "ChemotaxisModel",
+            "request": "launch",
+            "mainClass": "Examples.Chemotaxis.ChemotaxisModel",
+            "projectName": "HAL_Summer2024_d881c9d1"
+        },
+        {
+            "type": "java",
+            "name": "PopGrid",
+            "request": "launch",
+            "mainClass": "LEARN_HERE.Agents.PopGrid",
+            "projectName": "HAL_Summer2024_d881c9d1"
+        },
+        {
+            "type": "java",
+            "name": "MultiwellExample",
+            "request": "launch",
+            "mainClass": "LEARN_HERE.Agents.MultiwellExample",
+            "projectName": "HAL_Summer2024_d881c9d1"
+        },
+        {
+            "type": "java",
+            "name": "INDEX",
+            "request": "launch",
+            "mainClass": "Ishan.INDEX",
+            "projectName": "HAL_Summer2024_d881c9d1"
+        },
+        {
+            "type": "java",
+            "name": "INDEX2",
+            "request": "launch",
+            "mainClass": "Ishan.INDEX2",
+            "projectName": "HAL_Summer2024_d881c9d1"
+        },
+        {
+            "type": "java",
+            "name": "TreatmentCycle",
+            "request": "launch",
+            "mainClass": "Ishan.TreatmentCycle",
+            "projectName": "HAL_Summer2024_d881c9d1"
+        },
+        {
+            "type": "java",
             "name": "Fitness",
             "request": "launch",
             "mainClass": "Ishan.Fitness",
