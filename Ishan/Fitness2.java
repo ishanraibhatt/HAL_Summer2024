@@ -31,10 +31,10 @@ class Cell extends AgentSQ2Dunstackable<Fitness2> {
             //if it mutates, and the mutation actually does something, decide which mutation it will recieve
             if(G.rn.Double() > 0.5) {
                 this.DIV_PROB = this.DIV_PROB + 0.01;
-                this.DIE_PROB = this.DIE_PROB +0.003;
+                this.DIE_PROB = this.DIE_PROB +0.001;
             }else{
                 this.DIV_PROB = this.DIV_PROB -0.01;
-                this.DIE_PROB = this.DIE_PROB - 0.003;
+                this.DIE_PROB = this.DIE_PROB - 0.001;
             }
         Draw(this.DIV_PROB);
         }
